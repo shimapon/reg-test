@@ -25,7 +25,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Buid Storybook
-        run: npm run storybook:build
+        run: npm run build-storybook
       - name: Run Storycap
         run: npm run vrt:snapshot
       - name: Run reg-suit
