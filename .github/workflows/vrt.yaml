@@ -1,6 +1,6 @@
 name: Run VRT
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
+
+on: push
 
 env:
   REG_NOTIFY_CLIENT_ID: ${{ secrets.REG_NOTIFY_CLIENT_ID }}
@@ -9,13 +9,13 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # この指定がないと比較に失敗する
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
@@ -24,10 +24,9 @@ jobs:
           aws-region: ap-northeast-1
       - name: Install dependencies
         run: npm ci
-      - name: Build Storybook
-        run: npm run build-storybook
+      - name: Buid Storybook
+        run: npm run storybook:build
       - name: Run Storycap
-        run: npm run vrt:snapshot        
+        run: npm run vrt:snapshot
       - name: Run reg-suit
         run: npm run vrt:run
-
